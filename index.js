@@ -75,6 +75,7 @@ app.get('/api/test', (req,res) => {
 });
 
 app.post('/api/register', async (req,res) => {
+  console.log("post request");
   mongoose.connect(process.env.MONGO_URL);
   console.log("mongoDb connected");
   const {name,email,password} = req.body;
