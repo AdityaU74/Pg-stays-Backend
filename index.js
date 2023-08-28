@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use('/uploads', express.static(__dirname+'/uploads'));
 app.use(cors({
   credentials: true,
-  origin: 'https://pg-stays-frontend.vercel.app/*',
+  origin: ['http://127.0.0.1:5173' , 'https://pg-stays-frontend.vercel.app']
 }));
 
 async function uploadToS3(path, originalFilename, mimetype) {
