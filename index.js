@@ -24,7 +24,10 @@ const bucket = 'adi-app';
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname+'/uploads'));
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: 'https://pg-stays-frontend.vercel.app/',
+}));
 
 async function uploadToS3(path, originalFilename, mimetype) {
   const client = new S3Client({
@@ -75,11 +78,11 @@ app.get('/api/test', (req,res) => {
 });
 
 app.post('/api/register', async (req,res) => {
-  console.log("post request");
-  mongoose.connect(process.env.MONGO_URL);
-  console.log("mongoDb connected");
+  mongoose
+  .connect(process.env.MONGO_URL, { useNewUrlParser: true })
+  .then(() => console.log('DB Connected'))
+  .catch((err) => console.log(err));
   const {name,email,password} = req.body;
-
   try {
     const userDoc = await User.create({
       name,
@@ -262,4 +265,6 @@ app.get('/api/bookings', async (req,res) => {
   res.json( await Booking.find({user:userData.id}).populate('place') );
 });
 
-app.listen(4000);
+app.listen(4000 , () => {
+  console.log("server running on port 4000")
+});
