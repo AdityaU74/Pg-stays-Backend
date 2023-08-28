@@ -24,10 +24,7 @@ const bucket = 'adi-app';
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname+'/uploads'));
-app.use(cors({
-  credentials: true,
-  origin: '*',
-}));
+app.use(cors());
 
 async function uploadToS3(path, originalFilename, mimetype) {
   const client = new S3Client({
