@@ -20,15 +20,17 @@ const app = express();
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 const bucket = 'adi-app';
-
+// const allowCrossDomain = (req , res , next) => {
+//   res.header('')
+// }
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname+'/uploads'));
-app.use(cors({
-  credentials: true,
-  origin: ['http://127.0.0.1:5173' , 'https://pg-stays-frontend.vercel.app']
-}));
-
+// app.use(cors({
+//   credentials: true,
+//   origin: ['http://127.0.0.1:5174' , 'https://pg-stays-frontend.vercel.app']
+// }));
+app.use(cors({credentials: true, origin: true, exposedHeaders: '*'}))
 async function uploadToS3(path, originalFilename, mimetype) {
   const client = new S3Client({
     region: 'ap-south-1',
