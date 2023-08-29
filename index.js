@@ -26,8 +26,8 @@ const bucket = 'adi-app';
 app.use(express.json());
 app.use(cookieParser());
 app.use(function (request, response, next) {
-  response.header("Access-Control-Allow-Origin", 'https://pg-stays-frontend.vercel.app');
-  response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  response.set("Access-Control-Allow-Origin", 'https://pg-stays-frontend.vercel.app');
+  response.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 app.use('/uploads', express.static(__dirname+'/uploads'));
@@ -35,7 +35,6 @@ app.use('/uploads', express.static(__dirname+'/uploads'));
 //   credentials: true,
 //   origin: ['http://127.0.0.1:5174' , 'https://pg-stays-frontend.vercel.app']
 // }));
-app.use(cors({credentials: true, origin: true, exposedHeaders: '*'}))
 async function uploadToS3(path, originalFilename, mimetype) {
   const client = new S3Client({
     region: 'ap-south-1',
