@@ -26,8 +26,10 @@ const bucket = 'adi-app';
 app.use(express.json());
 app.use(cookieParser());
 app.use(function (request, response, next) {
-  response.set("Access-Control-Allow-Origin", 'https://pg-stays-frontend.vercel.app');
-  response.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  response.header("Access-Control-Allow-Origin", 'https://pg-stays-frontend.vercel.app');
+  response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization"); // Add Authorization header
+  response.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE"); // Add allowed methods
+  response.header("Access-Control-Allow-Credentials", true); // If using credentials
   next();
 });
 app.use('/uploads', express.static(__dirname+'/uploads'));
